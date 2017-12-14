@@ -14,6 +14,23 @@ public abstract class AdjacencyMatrix <V,E>{
       this.empty = empty;
     }
     
+    public int searchPosEdge(V edge){
+		int pos = -1;
+		for (int i = 0; i < vertex.length; i++) {
+			if(edge.equals(vertex[i])){
+				pos = i;
+				break;
+			}
+		}
+		return pos;
+	}
+    
+    public void setRelation(V edgeA, V edgeB, E edge){
+		int posA = searchPosEdge(edgeA);
+		int posB = searchPosEdge(edgeB);
+		if(!(posA == -1 || posB == -1)) edges[posA][posB] = edge;
+	}
+    
 //    public boolean isDirected(Comparator<E> comparator){
 //      // to do
 //      return false;
