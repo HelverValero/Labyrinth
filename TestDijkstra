@@ -1,0 +1,58 @@
+package test.dijkstra;
+
+import dinamic.graph.adjacencymatrix.MyGraph;
+import dinamic.simpleList.Node;
+import dinamic.simpleList.SimpleList;
+import models.Position;
+
+
+public class TestDijkstra {
+    public void print(SimpleList simpleList) {
+        Node node = simpleList.getHead();
+        while (node != null) {
+            System.out.println("" + node.getInfo());
+            node = node.getNext();
+        }
+    }
+    public static void main(String[] args) {
+        Position[] positions = {
+            new Position(100, 100),
+            new Position(200, 100),
+            new Position(200, 150),
+            new Position(300,150),
+            new Position(300, 400),
+            new Position(10, 400),
+            new Position(10, 100),
+            new Position(500, 100),
+            new Position(500, 600),
+            new Position(50, 600),
+            new Position(500, 350),
+            new Position(850, 350),
+            new Position(250, 600),
+        };
+        
+        Long[][] edges = new Long[positions.length][positions.length];
+        for (int i = 0; i < edges.length; i++) {
+            for (int j = 0; j < edges[0].length; j++) {
+                edges[i][j] = new Long(Long.MAX_VALUE);
+            }
+        }
+     
+        edges[0][1] = (long) positions[0].distance(positions[1]);
+        edges[1][2] = (long) positions[1].distance(positions[2]);
+        edges[2][3] = (long) positions[2].distance(positions[3]);
+        edges[3][4] = (long) positions[3].distance(positions[4]);
+        edges[4][5] = (long) positions[4].distance(positions[5]);
+        edges[5][6] = (long) positions[5].distance(positions[6]);
+        edges[6][7] = (long) positions[6].distance(positions[7]);
+        edges[7][8] = (long) positions[7].distance(positions[8]);
+        edges[8][9] = (long) positions[8].distance(positions[9]);
+        edges[9][10] = (long) positions[9].distance(positions[10]);
+        edges[10][11] = (long) positions[10].distance(positions[11]);
+        edges[11][12] = (long) positions[11].distance(positions[12]);
+        MyGraph<Position, Long> myGraph = new MyGraph(positions, edges);
+        myGraph.setEmpty(Long.MAX_VALUE);        
+        SimpleList <Position> simpleList = myGraph.dijkstraMinHeap(positions[5], Long.MAX_VALUE);
+        new TestDijkstra().print(simpleList);
+    }
+}
