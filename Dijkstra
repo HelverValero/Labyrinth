@@ -1,0 +1,89 @@
+package dinamic.graph.adjacencymatrix;
+
+import dinamic.simpleList.SimpleList;
+import java.util.Comparator;
+
+public class AdjacencyMatrix<V, E> {
+
+    private V[] vertex;
+    private E[][] edges;
+    private E empty;
+
+    public AdjacencyMatrix(V[] vertex, E[][] edges) {
+        this.vertex = vertex;
+        this.edges = edges;
+    }
+
+    public void setEmpty(E empty) {
+        this.empty = empty;
+    }
+
+    /**
+     * Retorna la posicion de un vertice
+     *
+     * @param vertexFind vertice a buscar
+     * @return
+     */
+    public int indexOf(V vertexFind) {
+        int position = -1;
+        for (int k = 0; k < vertex.length; k++) {
+            if (vertex[k].equals(vertexFind)) {
+                position = k;
+            }
+        }
+        return position;
+    }
+
+    /**
+     * Algoritmo de Dijkstra. Determina la ruta mínima desde un vértice inicial
+     *
+     *
+     * @param graph matriz con las aristas del grafo
+     * @param source vértice inicial
+     */
+    public SimpleList<V> dijkstraMinHeap(V home, long maxValue) {
+        SimpleList<V> pathList = new SimpleList();
+        Heap<Integer> heap = new Heap(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 - 02;
+            }
+        });
+        int indexHome = indexOf(home);
+
+        int dist[] = new int[vertex.length];
+        double positionLast[] = new double[vertex.length];
+        Boolean isIncluded[] = new Boolean[vertex.length];
+
+        for (int i = 0; i < vertex.length; i++) {
+            dist[i] = (int) maxValue;
+            isIncluded[i] = false;
+            positionLast[i] = -1;
+        }
+        dist[indexHome] = 0;
+
+        for (int i = 0; i < vertex.length; i++) {
+            heap.put(dist[i]);
+        }
+        while (!heap.isEmpty()) {
+            int u = heap.get();
+            isIncluded[u] = true;
+            for (int v = 0; v < vertex.length; v++) {
+                if (isIncluded[v] = true && dist[v] > dist[u] + Double.parseDouble(String.valueOf(edges[u][v]))) {
+                    dist[v] = dist[u] + Integer.parseInt(String.valueOf(edges[u][v]));
+                    positionLast[v] = u;
+                    heap.put(dist[v]);
+                }
+            }
+        }
+        while (positionLast[indexHome] != -1) {
+            indexHome = (int) positionLast[indexHome];
+            pathList.insert(vertex[indexHome]);
+        }
+        if (!pathList.isEmpty() && pathList.getHead().getInfo() == home) {
+            return pathList;
+        } else {
+            return null;
+        }
+    }
+}
